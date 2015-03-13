@@ -28,39 +28,46 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //view addSubview:slider;
+    
+}
+
+-(IBAction)slider:(UISlider *)sender {
+    self.slider = (UISlider *)sender;
+    NSString *sliderText = [NSString stringWithFormat:@"%.0f", self.slider.value];
+    self.multiplierLabel.text = sliderText;
     self.slider.minimumValue = 0;
     self.slider.maximumValue = 10;
-    self.slider.value = 5;
-    self.slider.continuous = YES;
-
-    self.multiplierLabel.text = [NSString stringWithFormat:@"%.0f", self.slider.value];
-
 }
+
+#pragma mark- Calculate Button Method
 - (IBAction)onCalculateButtonPressed:(UIButton *)calcButton {
-    self.inputNumber = [self.numberTextField.text intValue];//why are we using intValue? where does this come from?
+    self.inputNumber = [self.numberTextField.text intValue];
     self.inputMultiplier = [self.multiplierLabel.text intValue];
 
-    //choosing which segmented control to use * or /
+
+#pragma mark Segment choose
+    //Calculator Math and choosing which segmented control to use * or /
     if (self.operatorSegmentControl.selectedSegmentIndex == 0) {
         self.result = self.inputNumber * self.inputMultiplier;
     } else if (self.operatorSegmentControl.selectedSegmentIndex ==1) {
         self.result = self.inputMultiplier / self.inputNumber;
     }
 
-    //turns the result value(int) into a String
+#pragma mark formats int to String for display
     NSString *resultText = [@(self.result) stringValue];
     self.answerLabel.text = resultText;
-
+    //log return string
     NSLog(@"%@", resultText);
+
+#pragma mark Conditional Formats for Result 
 
     if (self.result >= 20) {
         self.view.backgroundColor = [UIColor greenColor];
-
     } else  {
         self.view.backgroundColor = [UIColor whiteColor];
     }
 
+    //Fizz Buzz Logic
     if (self.result %3 == 0 && self.result %5 ==0) {
         self.answerLabel.text = @"Fizz Buzz";
     } else if (self.result %5 == 0){
@@ -72,12 +79,6 @@
     [self.numberTextField resignFirstResponder];
 }
 
-
-- (IBAction)slider:(UISlider *)sender {
-
-    //self.multiplierLabel.text =
-
-}
 
 
 
